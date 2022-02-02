@@ -26,9 +26,10 @@ public class Form {
 	
 	static Font font1 = new Font("Verdana", Font.PLAIN, 25);
 	static Font font2 = new Font("Verdana", Font.PLAIN, 15);
+	static Font font3 = new Font("sans-serif", Font.ITALIC, 20);
 	static Border solidBorder = BorderFactory.createLineBorder(Color.BLACK, 1);
 	
-		/*Information menu*/
+			/*Information menu*/
 	Company myCompany = new Company();
 	Tariff tarifBasic = new Tariff();
 	TarifPerMinute tarifMinute = new TarifPerMinute();
@@ -37,7 +38,7 @@ public class Form {
 	Subscriber sub2 = new Subscriber();
 	Subscriber sub3 = new Subscriber();
 	
-		/*Add subscriber menu*/
+			/*Add subscriber menu*/
 	ArrayList<String> subsBasicName = new ArrayList<String>();
 	ArrayList<String> subsSecondName = new ArrayList<String>();
 	ArrayList<String> subsMinuteName = new ArrayList<String>();
@@ -54,7 +55,6 @@ public class Form {
 	ArrayList<ArrayList<String>> subsSecond = new ArrayList<ArrayList<String>>();
 	ArrayList<ArrayList<String>> subsMinute = new ArrayList<ArrayList<String>>();
 
-    /*Main method*/
     public void createGUI() throws MyException, IOException {
 
         myCompany.setName("SpaceX");
@@ -83,34 +83,21 @@ public class Form {
 
         sub3.setNewMoneyLeft("18500");
         sub3.setPhoneNumber("+87322838787");
-        sub3.setFullName("Danil Klimov");
-
-        /*----------------------------------*/
-        /*----------------------------------*/
-        /*----------Creating windows--------*/
-        /*----------------------------------*/
-        /*----------------------------------*/
-
-        Font font1 = new Font("Verdana", Font.PLAIN, 25);
-        Font font2 = new Font("Verdana", Font.PLAIN, 15);
-
-                            /*----------------------------------*/
-                            /*------------Information-----------*/
-                            /*----------------------------------*/
+        sub3.setFullName("Danil Klimov");  
+        
+        /*--------------------------------------*/
 
         JFrame mainFrame = new JFrame();
+        
         JMenuBar mb = new JMenuBar();
+        mb.setPreferredSize(new Dimension(195, 50));
 
-        /*-----------------------------------------*/
-        JMenu info = new JMenu("");
-        info.setText("Information");
-        /*
-        info.setHorizontalAlignment(JMenu.CENTER);
-        info.setVerticalAlignment(JMenu.CENTER);
-*/
-        info.setPreferredSize(new Dimension(145, 50));
-        info.setFont(new Font("sans-serif", Font.BOLD, 20));
-        info.setBorder(BorderFactory.createLineBorder(Color.black));
+					        /*----------------------------------*/
+					        /*------------Information-----------*/
+					        /*----------------------------------*/
+        
+        JMenu info = new JMenu("Information");
+        info.setFont(font3);
 
         JMenuItem companyInfo = new JMenuItem("Information about 'SpaceX'");
         JMenuItem basicInfo = new JMenuItem("Information about tariff 'Basic'");
@@ -118,16 +105,19 @@ public class Form {
         JMenuItem minuteInfo = new JMenuItem("Information about tariff 'Minute'");
 
         info.add(companyInfo);
-        info.add(basicInfo);
-        info.add(secondInfo);
-        info.add(minuteInfo);
-
-        /*-----------------------------------------*/
-        /*-----------------------------------------*/
-        
+        companyInfo.setHorizontalAlignment(JMenuItem.CENTER);
         companyInfo.addActionListener(new CompanyInfoPressed());
+        
+        info.add(basicInfo);
+        basicInfo.setHorizontalAlignment(JMenuItem.CENTER);
         basicInfo.addActionListener(new TarifBasicInfoPressed());
+        
+        info.add(secondInfo);
+        secondInfo.setHorizontalAlignment(JMenuItem.CENTER);
         secondInfo.addActionListener(new TarifSecondInfoPressed());
+        
+        info.add(minuteInfo);
+        minuteInfo.setHorizontalAlignment(JMenuItem.CENTER);
         minuteInfo.addActionListener(new TarifMinuteInfoPressed());
 
 					        /****************/
@@ -135,14 +125,17 @@ public class Form {
 					        /****************/
 
         JMenu addSub = new JMenu("Add subscriber");
-        addSub.setPreferredSize(new Dimension(210 , 50));
-        addSub.setFont(new Font("sans-serif", Font.ITALIC, 20));
-        //addSub.setBorder(BorderFactory.createLineBorder(Color.black));
-        //pane.setBorder(BorderFactory.createLineBorder(Color.black));
+        addSub.setFont(font3);
 
         JMenuItem basicOption = new JMenuItem("Tariff 'Basic'");
+        basicOption.addActionListener(new AddToBasicPressed());
+        
         JMenuItem secondOption = new JMenuItem("Tariff 'Second'");
+        secondOption.addActionListener(new AddToSecondPressed());
+        
         JMenuItem minuteOption = new JMenuItem("Tariff 'Minute'");
+        minuteOption.addActionListener(new AddToMinutePressed());
+        
 
         addSub.add(basicOption);
         addSub.add(secondOption);
@@ -150,107 +143,90 @@ public class Form {
 
         /*-----------------------------------------*/
        
-        subsBasicName.add(sub1.getFullName()); //subsBasicName.add(sub1.getFullName());
+        subsBasicName.add(sub1.getFullName()); 
         subsSecondName.add(sub2.getFullName());
         subsMinuteName.add(sub3.getFullName());
 
-        subsBasicPhone.add(sub1.getPhoneNumber()); //subsBasicPhone.add(sub1.getPhoneNumber());
+        subsBasicPhone.add(sub1.getPhoneNumber()); 
         subsSecondPhone.add(sub2.getPhoneNumber());
         subsMinutePhone.add(sub3.getPhoneNumber());
         
-        subsBasicMoneyLeft.add(sub1.getMoneyLeft()); //subsBasicMoneyLeft.add(sub1.getMoneyLeft());
+        subsBasicMoneyLeft.add(sub1.getMoneyLeft()); 
         subsSecondMoneyLeft.add(sub2.getMoneyLeft());
         subsMinuteMoneyLeft.add(sub3.getMoneyLeft());
 
         subsBasic.add(subsBasicName); subsBasic.add(subsBasicPhone); subsBasic.add(subsBasicMoneyLeft);
         subsSecond.add(subsSecondName); subsSecond.add(subsSecondPhone); subsSecond.add(subsSecondMoneyLeft);
         subsMinute.add(subsMinuteName); subsMinute.add(subsMinutePhone); subsMinute.add(subsMinuteMoneyLeft);
-        /*-----------------------------------------*/
-        
-        basicOption.addActionListener(new AddToBasicPressed());
-        secondOption.addActionListener(new AddToSecondPressed());
-        minuteOption.addActionListener(new AddToMinutePressed());
        
 					        /*******************/
 					        /*Delete subscriber*/
 					        /*******************/
         
         JMenu removeSub = new JMenu("Delete subscriber");
-        removeSub.setPreferredSize(new Dimension(200, 50));
-        removeSub.setFont(new Font("sans-serif", Font.ITALIC, 20));
-        //removeSub.setBorder(BorderFactory.createLineBorder(Color.black));
+        removeSub.setFont(font3);
 
         JMenuItem basicRemove = new JMenuItem("Delete subscriber in tariff 'Basic'");
+        basicRemove.addActionListener(new RemoveFromBasicPressed());
+        
         JMenuItem secondRemove = new JMenuItem("Number of subscribers in tariff 'Second'");
+        secondRemove.addActionListener(new RemoveFromSecondPressed());
+        
         JMenuItem minuteRemove = new JMenuItem("Number of subscribers in tariff 'Minute'");
-
+        minuteRemove.addActionListener(new RemoveFromMinutePressed());
+        
         removeSub.add(basicRemove);
         removeSub.add(secondRemove);
         removeSub.add(minuteRemove);
-
-        /*-----------------------------------------*/
-
-        basicRemove.addActionListener(new RemoveFromBasicPressed());
-        secondRemove.addActionListener(new RemoveFromSecondPressed());
-        minuteRemove.addActionListener(new RemoveFromMinutePressed());
         
 					        /*******************/
 					        /*Change subscriber*/
 					        /*******************/
 
         JMenu changeSub = new JMenu("Change subscriber");
-        changeSub.setPreferredSize(new Dimension(210, 50));
-        changeSub.setFont(new Font("sans-serif", Font.ITALIC, 20));
-        //changeSub.setBorder(BorderFactory.createLineBorder(Color.black));
-
-        /*JLabel welcomeLabel= new JLabel();
-        welcomeLabel.setFont(new Font("Name Of Font Suitable Font", Font.BOLD + Font.ITALIC, 100));
-        welcomeLabel.setText("Welcome");*/
+        changeSub.setFont(font3);
 
         JMenuItem basicChange = new JMenuItem("Change subscriber in tariff 'Basic'");
+        basicChange.addActionListener(new ChangeFromBasicPressed());
+        
         JMenuItem secondChange = new JMenuItem("Change subscriber in tariff 'Second'");
+        secondChange.addActionListener(new ChangeFromSecondPressed());
+        
         JMenuItem minuteChange = new JMenuItem("Change subscriber in tariff 'Minute'");
-
+        minuteChange.addActionListener(new ChangeFromMinutePressed());
+        
         changeSub.add(basicChange);
         changeSub.add(secondChange);
         changeSub.add(minuteChange);
-
-        /*-----------------------------------------*/
-
-        basicChange.addActionListener(new ChangeFromBasicPressed());
-        secondChange.addActionListener(new ChangeFromSecondPressed());
-        minuteChange.addActionListener(new ChangeFromMinutePressed());
-
-					        /*********************/
+        
+				        	/*********************/
 					        /*List of subscribers*/
 					        /*********************/
 
         JMenu listOfSubs = new JMenu("List of subscribers");
-        listOfSubs.setPreferredSize(new Dimension(195, 50));
-        listOfSubs.setFont(new Font("sans-serif", Font.BOLD, 20));
-        listOfSubs.setBorder(BorderFactory.createLineBorder(Color.black));
+        listOfSubs.setFont(font3);
 
         JMenuItem basicList = new JMenuItem("Number of subscribers in tariff 'Basic'");
+        basicList.addActionListener(new ListOfBasicTariffPressed());
+        
         JMenuItem secondList = new JMenuItem("Number of subscribers in tariff 'Second'");
+        secondList.addActionListener(new ListOfSecondTariffPressed());
+        
         JMenuItem minuteList = new JMenuItem("Number of subscribers in tariff 'Minute'");
-
+        minuteList.addActionListener(new ListOfMinuteTariffPressed());
+        
         listOfSubs.add(basicList);
         listOfSubs.add(secondList);
         listOfSubs.add(minuteList);
-
-        basicList.addActionListener(new ListOfBasicTariffPressed());
-        secondList.addActionListener(new ListOfSecondTariffPressed());
-        minuteList.addActionListener(new ListOfMinuteTariffPressed());
        
-
-					       /*********************/
-					       /***Main-area-frame***/
-					       /*********************/
-        //FlowLayout flowLayout = new FlowLayout(FlowLayout.RIGHT);
+						       /******************/
+						       /**Main area frame*/
+						       /******************/
 
         JPanel mainPanel = new JPanel();
         mainPanel.setBounds(10, 10, 940, 600);
-        BoxLayout boxLayoutMain = new BoxLayout(mainPanel, BoxLayout.Y_AXIS);
+        
+        BoxLayout boxLayoutMain = new BoxLayout(mainPanel, BoxLayout.Y_AXIS);  
         mainPanel.setLayout(boxLayoutMain);
 
         /*-----------------------------------------*/
@@ -286,7 +262,6 @@ public class Form {
         instructionLabel.setVerticalAlignment(JLabel.CENTER);
         instructionLabel.setHorizontalAlignment(JLabel.CENTER);
 
-        //instructionPanel.add(instructionWordLabel);
         instructionPanel.add(instructionLabel);
 
         /*-----------------------------------------*/
@@ -296,42 +271,39 @@ public class Form {
         iconLabel.setBounds(10, 400, 200, 200);
 
         /*-----------------------------------------*/
-        mainPanel.add(iconLabel);
-        mainPanel.add(instructionPanel);
-        /*
-        instructionPanel.add(instructionWordLabel, BorderLayout.NORTH);
-        instructionPanel.add(instructionLabel, BorderLayout.EAST);
-*/
 
-        /*-----------------------------------------*/
-        /*-----------------------------------------*/
-
+        /*Building upper menu*/
         mb.add(info);
         mb.add(addSub);
         mb.add(removeSub);
         mb.add(changeSub);
         mb.add(listOfSubs);
-
+        mb.setLayout(new GridLayout(1,5));
+        
+        /*Building main field*/
+        mainPanel.add(iconLabel);
+        mainPanel.add(instructionPanel);
+        //mainPanel.setLayout(new GridLayout(2,1));
+        
+        /*Building whole frame*/
         mainFrame.add(mb);
+        mainFrame.setJMenuBar(mb);
         mainFrame.add(mainPanel);
         
-        /*
-        mainFrame.add(instructionWordLabel);
-        mainFrame.add(instructionLabel);
-*/
-        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainFrame.setJMenuBar(mb);
+        mainFrame.setName("SpaceX");
+        mainFrame.setTitle("SpaceX");
 
-        mainFrame.setBackground(Color.yellow);
-        mainFrame.setName("JAVA. LAB-8.");
-        mainFrame.setTitle("JAVA. LAB-8.");
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setLayout(null);
         mainFrame.pack();
-
         mainFrame.setSize(975,700);
         mainFrame.setVisible(true);
-
         mainFrame.setLocationRelativeTo(null);
+        
+        mainFrame.setResizable(false);
+        
+        //Works for label 
+        //timerLabel = new JLabel("Time Remaining 300 seconds", SwingConstants.CENTER);
 
         Image icon3 = new ImageIcon(Form.class.getResource("/icons/icon4.jpg")).getImage();
         mainFrame.setIconImage(icon3);
@@ -399,7 +371,6 @@ class TarifBasicInfoPressed extends Form implements ActionListener {
 }
 
 class TarifSecondInfoPressed extends Form implements ActionListener {
-	
 	
 	public TarifSecondInfoPressed() throws MyException, IOException {
 		super();
